@@ -52,7 +52,7 @@ public partial class Default3 : System.Web.UI.Page
             headerTableCell_0.Border = Rectangle.NO_BORDER;
             headerTable.AddCell(headerTableCell_0);
 
-            PdfPCell headerTableCell_1 = new PdfPCell(new Phrase("แบบขอยืมคอมพิวเตอร์ /อุปกรณ์ต่อพ่วง และอุปกรณ์สื่อสารโทรคมนาคม\n \t \t \t \t \t \t สำหรับงานเฉพาะกิจ(งานบริการยืมชั่วคราว)", bold));
+            PdfPCell headerTableCell_1 = new PdfPCell(new Phrase("แบบขอยืมคอมพิวเตอร์/อุปกรณ์ต่อพ่วง และอุปกรณ์สื่อสารโทรคมนาคม\n \t \t \t \t \t \t สำหรับงานเฉพาะกิจ (งานบริการยืมชั่วคราว)", bold));
             headerTableCell_1.HorizontalAlignment = Element.ALIGN_LEFT;
             headerTableCell_1.VerticalAlignment = Element.ALIGN_BOTTOM;
             headerTableCell_1.Border = Rectangle.NO_BORDER;
@@ -148,7 +148,7 @@ public partial class Default3 : System.Web.UI.Page
         SqlCommand cmd = new SqlCommand();
         SqlDataReader myReader;
         // cmd.CommandText = "SELECT Activity, place, Get_Equipment, Name, Return_Equipment,Total_use,assign_to,Department,EN_Equipment FROM borroww";
-        cmd.CommandText = "SELECT name FROM [user]";
+        cmd.CommandText = "SELECT name, tel, email, position, agency, status FROM [user]";
         cmd.Connection = con;
         con.Open();
         myReader = cmd.ExecuteReader();
@@ -156,29 +156,36 @@ public partial class Default3 : System.Web.UI.Page
 
 
        // string Name = myReader.GetString(myReader.GetOrdinal("Name"));
-      //  string Activity = myReader.GetString(myReader.GetOrdinal("Activity"));
-        string name = myReader.GetString(myReader.GetOrdinal("name"));
+       // string Activity = myReader.GetString(myReader.GetOrdinal("Activity"));
+        string sName = myReader.GetString(myReader.GetOrdinal("name"));
         //string sAddress1 = myReader.GetString(myReader.GetOrdinal("Address Line 1"));
         //string sAddress2 = myReader.GetString(myReader.GetOrdinal("Address Line 2"));
         //string sPost = myReader.GetString(myReader.GetOrdinal("Post Code"));
-        //string sTelephone = myReader.GetString(myReader.GetOrdinal("Telephone Number"));
-        //string sEmail = myReader.GetString(myReader.GetOrdinal("Email Address"));
+        string sStatus = myReader.GetString(myReader.GetOrdinal("status"));
+        string sPosition = myReader.GetString(myReader.GetOrdinal("position"));
+        string sAgency = myReader.GetString(myReader.GetOrdinal("agency"));
+        string sTelephone = myReader.GetString(myReader.GetOrdinal("tel"));
+        string sEmail = myReader.GetString(myReader.GetOrdinal("email"));
         //string sRegistration = myReader.GetString(myReader.GetOrdinal("Registration Number"));
 
                 Paragraph para = new Paragraph();
                 para.FirstLineIndent = 38.1f;
                 para.Add(new Phrase("ข้าพเจ้านาย/นาง/น.ส.\t", normal));
         //para.Add(new Phrase(Name + "\t \t", normal));
-        para.Add(new Phrase(" " + name + "\t \t", bold));
+        para.Add(new Phrase(" " + sName + "\t \t", bold));
         para.Add(new Phrase("ตำแหน่ง", normal));
-               // para.Add(new Phrase(Activity, normal));
-                para.Add(new Phrase("................................................................\n", normal));
-                para.Add(new Phrase("สังกัดหน่วยงาน", normal));
-                para.Add(new Phrase("..............................................................................", normal));
-                para.Add(new Phrase("โทรศัพท์ที่ติดต่อได้", normal));
-                para.Add(new Phrase("................................................................\n", normal));
+        // para.Add(new Phrase(Activity, normal));
+        para.Add(new Phrase(" " + sStatus + "\t", bold));
+        //para.Add(new Phrase("................................................................\n", normal));
+        para.Add(new Phrase("สังกัดหน่วยงาน", normal));
+        para.Add(new Phrase(" " + sAgency + "\t \n", bold));
+        //para.Add(new Phrase("..............................................................................", normal));
+        para.Add(new Phrase("โทรศัพท์ที่ติดต่อได้", normal));
+                para.Add(new Phrase(" " + sTelephone + "\t \t", bold));
+                // para.Add(new Phrase("................................................................\n", normal));
                 para.Add(new Phrase("อีเมล์", normal));
-                para.Add(new Phrase("..........................................................................................\n", normal));
+                para.Add(new Phrase(" " + sEmail + "\t", bold));
+                //para.Add(new Phrase("..........................................................................................\n", normal));
            
             
             con.Close();
